@@ -1,0 +1,26 @@
+package macropassone;
+
+import java.io.*;
+
+
+public class Main {
+	static BufferedWriter writer;
+	static BufferedReader reader;
+	static PassOne macroPassOne = new PassOne();
+	static MacroOutput macroOutput = new MacroOutput();
+	public static void main(String []args) throws IOException{
+		reader = new BufferedReader(new FileReader("input.asm"));
+		macroOutput =  macroPassOne.getOutPut(reader);
+	
+		writer = new BufferedWriter(new FileWriter("MNT.txt"));
+		writer.write(macroOutput.getMNT());
+		System.out.println(macroOutput.getMNT());
+		writer.close();
+	
+		writer = new BufferedWriter(new FileWriter("MDT.txt"));
+		writer.write(macroOutput.getMDT());
+		System.out.println(macroOutput.getMDT());
+		writer.close();
+	
+	}
+}

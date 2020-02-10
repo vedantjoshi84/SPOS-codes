@@ -1,0 +1,167 @@
+package macropassone;
+
+import java.io.*;
+import java.util.*;
+
+
+public class PassOne {
+	ArrayList<MNTEntry>MNT;
+	ArrayList<String>PNTAB;
+	HashMap<String,String>KPDTAB;
+	
+	public PassOne(){
+		MNT    = new ArrayList<MNTEntry>();
+		PNTAB  = new ArrayList<String>();
+		KPDTAB = new HashMap<String,String>();
+	}
+	
+	
+	public MacroOutput getOutPut(BufferedReader reader) throws IOException{
+		String line;
+		int kpdtp=0;
+		int mdtp =0;
+		
+		while((line = reader.readLine())!=null){
+			String parts[] = line.split("\\s+");
+			
+			if(parts[0].equals("MACRO")){
+				System.out.println("found macro");
+				PNTAB.clear();
+				//handling initial statements
+				String prototype[] = reader.readLine().split("\\s+|,\\s+");
+				MNTEntry entry = new MNTEntry(prototype[0],mdtp,kpdtp);
+				
+				//counting no of parameters
+				for(int i=1;i<prototype.length;i++){
+					//keywordParameters;
+					if(prototype[i].contains("=")){
+						kpdtp++;
+						entry.incrKP();
+						String keywordParts[] = prototype[i].replace("&","").split("=");
+						KPDTAB.put(keywordParts[0],((keywordParts.length==2) ? keywordParts[1]:"-"));
+						PNTAB.add(keywordParts[0]);
+					}
+					//positionalParameters
+					else{
+						entry.incrPP();
+						PNTAB.add(prototype[i].replace("&",""));
+					}
+				}
+				MNT.add(entry);				
+			}
+		}
+		MacroOutput macroOutput = new MacroOutput();
+		
+		
+		//for MNT
+		final StringBuilder mnt = new StringBuilder(); 
+		for(MNTEntry values : MNT){
+			System.out.println(values.getName());
+		  mnt.append(values).append("\n");
+		}
+		macroOutput.setMNT(mnt.toString());
+		System.out.println("MNT FROM PASSONE:!!!!!!!!!!!");
+		System.out.println(mnt.toString());
+		//for KPDTAB
+		/*final StringBuilder kpdtab = new StringBuilder();
+		   for (Map.Entry<String, String> pair: KPDTAB.entrySet()) {
+	         String tempkey = pair.getKey();
+	         String tempvalue = pair.getValue();
+	         kpdtab.append(tempkey).append("\t").append(tempvalue).append("\n");
+		   }
+		macroOutput.setKPDTAB(kpdtab.toString());
+		
+		//for PNTAB
+		  final StringBuilder pntab = new StringBuilder();	
+		  for (String values : PNTAB) {
+	            pntab.append(values).append("\n");
+	        }
+		macroOutput.setPNTAB(pntab.toString());*/
+		
+		
+		return macroOutput;
+	}
+}
+
+class MacroOutput{
+	String MNT;
+	String KPDTAB;
+	String PNTAB;
+	String MDT;
+	
+	public String getMNT() {
+		return MNT;
+	}
+	public void setMNT(String mNT) {
+		MNT = mNT;
+	}
+	public String getKPDTAB() {
+		return KPDTAB;
+	}
+	public void setKPDTAB(String kPDTAB) {
+		KPDTAB = kPDTAB;
+	}
+	public String getPNTAB() {
+		return PNTAB;
+	}
+	public void setPNTAB(String pNTAB) {
+		PNTAB = pNTAB;
+	}
+	public String getMDT() {
+		return MDT;
+	}
+	public void setMDT(String mDT) {
+		MDT = mDT;
+	}
+}
+class MNTEntry {
+	String name;
+	int pp;
+	int kp;
+	int mdtp;
+	int kpdtp;
+	
+	public MNTEntry(String name, int mdtp, int kpdtp){
+		this.name  = name;
+		this.kpdtp = kpdtp;
+		this.mdtp  = mdtp;
+	}
+	public void incrKP(){
+		System.out.println("in incrKP");
+		this.kp++;
+	}
+	public void incrPP(){
+		System.out.println("in incrPP");
+		this.pp++;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getPp() {
+		return pp;
+	}
+	public void setPp(int pp) {
+		this.pp = pp;
+	}
+	public int getKp() {
+		return kp;
+	}
+	public void setKp(int kp) {
+		this.kp = kp;
+	}
+	public int getMdtp() {
+		return mdtp;
+	}
+	public void setMdtp(int mdtp) {
+		this.mdtp = mdtp;
+	}
+	public int getKpdtp() {
+		return kpdtp;
+	}
+	public void setKpdtp(int kpdtp) {
+		this.kpdtp = kpdtp;
+	}
+}

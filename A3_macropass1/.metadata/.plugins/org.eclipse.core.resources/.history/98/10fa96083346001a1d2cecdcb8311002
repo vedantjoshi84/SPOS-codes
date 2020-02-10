@@ -1,0 +1,32 @@
+
+public class MacroOutput {
+	String MNT;
+	String KPDTAB;
+	String PNTAB;
+	String MDT;
+	
+	public String getMNT() {
+		return MNT;
+	}
+	public void setMNT(String mNT) {
+		MNT = mNT;
+	}
+	public String getKPDTAB() {
+		return KPDTAB;
+	}
+	public void setKPDTAB(String kPDTAB) {
+		KPDTAB = kPDTAB;
+	}
+	public String getPNTAB() {
+		return PNTAB;
+	}
+	public void setPNTAB(String pNTAB) {
+		PNTAB = pNTAB;
+	}
+	public String getMDT() {
+		return MDT;
+	}
+	public void setMDT(String mDT) {
+		MDT = mDT;
+	}
+}
